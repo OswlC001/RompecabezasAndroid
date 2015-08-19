@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
+using Android.Content;
 
 namespace RompecabezasCCA
 {
@@ -25,8 +27,8 @@ namespace RompecabezasCCA
 		EASY_BUTTON_INDEX = 0,
 		MEDIUM_BUTTON_INDEX = 1,
 		HARD_BUTTON_INDEX = 2,
-		BUTTON_HEIGHT = 100,
-		BUTTON_WIDTH = 300;
+		BUTTON_HEIGHT = 200,
+		BUTTON_WIDTH = 600;
 		Color background_color;
 		Color[] button_color = new Color[NUMBER_OF_BUTTONS];
 		Rectangle[] button_rectangle = new Rectangle[NUMBER_OF_BUTTONS];
@@ -61,7 +63,7 @@ namespace RompecabezasCCA
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-			int x = Window.ClientBounds.Width/2 -  BUTTON_WIDTH / 2 + 165;
+			int x = Window.ClientBounds.Width/2 -  BUTTON_WIDTH / 2 + 300;
 			int y = Window.ClientBounds.Height/2 - NUMBER_OF_BUTTONS / 2 * BUTTON_HEIGHT - (NUMBER_OF_BUTTONS%2)*BUTTON_HEIGHT/2 + 25;
 			for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
 			{
@@ -116,13 +118,21 @@ namespace RompecabezasCCA
 			frame_time = gameTime.ElapsedGameTime.Milliseconds / 1000.0;
 
 			// update mouse variables
-			MouseState mouse_state = Mouse.GetState();
-			mx = mouse_state.X;
-			my = mouse_state.Y;
-			prev_mpressed = mpressed;
-			mpressed = mouse_state.LeftButton == ButtonState.Pressed;
 
-			update_buttons();
+			TouchCollection touchCollection = TouchPanel.GetState ();
+
+			foreach (TouchLocation tl in touchCollection) {
+				if ((tl.State == TouchLocationState.Pressed) || (tl.State == TouchLocationState.Moved)) {					
+					mx = (int) tl.Position.X;
+					my = (int) tl.Position.Y;
+
+					prev_mpressed = mpressed;
+					mpressed = tl.State == TouchLocationState.Pressed;
+					update_buttons();
+				}
+			}
+
+
 
             base.Update(gameTime);
         }
@@ -228,13 +238,13 @@ namespace RompecabezasCCA
 			switch (i)
 			{
 			case EASY_BUTTON_INDEX:				
-				new Rompecabezas (3).Run ();
+				new JuegoFacil ().Start ();
 				break;
 			case MEDIUM_BUTTON_INDEX:
-				new Rompecabezas (4).Run ();
+				new JuegoMedio ().Start ();
 				break;
 			case HARD_BUTTON_INDEX:
-				new Rompecabezas (5).Run ();
+				new JuegoDificil ().Start ();
 				break;
 			default:
 				break;
