@@ -15,6 +15,7 @@ namespace RompecabezasCCA
 		SpriteBatch spriteBatch;
 		Texture2D texture;
 		Texture2D imgGanador;
+		Texture2D minion;
 		Pieza[,] pieza;
 		int cortes;
 		int anchoCorte;
@@ -69,8 +70,9 @@ namespace RompecabezasCCA
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch (GraphicsDevice);
-			texture = this.Content.Load<Texture2D> ("terminator");
+			texture = this.Content.Load<Texture2D> ("minion");
 			imgGanador = this.Content.Load<Texture2D> ("ganaste");
+			minion = this.Content.Load<Texture2D> ("minion");
 			pieza = new Pieza[nPiezas, nPiezas];
 			cortes = nPiezas;
 			ganador = false;
@@ -185,12 +187,13 @@ namespace RompecabezasCCA
 		{		
 			GraphicsDevice.Clear (Color.Blue);
 			spriteBatch.Begin ();
-
+			spriteBatch.Draw (minion, new Vector2(1000,0), null, Color.White, 0f, Vector2.Zero, new Vector2 (1f, 1f), SpriteEffects.None, 0f);
 			if (!ganador) {
 				int verifOrden = 0;
 				for (int y = 0; y < cortes; y++) {	
 					for (int x = 0; x < cortes; x++) {			
 						spriteBatch.Draw (texture, obtenerUbicacion (x, y), pieza [x, y].getSourceRectangle (), Color.White, 0f, Vector2.Zero, new Vector2 (1f, 1f), SpriteEffects.None, 0f);
+
 						if (pieza [x, y].esOrdenCorrecto (x, y))
 							verifOrden++;
 					}  
@@ -199,9 +202,10 @@ namespace RompecabezasCCA
 					}
 				}
 			} else {
-				spriteBatch.Draw (imgGanador, new Vector2 (0, 0), null, Color.White, 0f, Vector2.Zero, new Vector2 (1f, 1f), SpriteEffects.None, 0f);
+					
 			}
 			spriteBatch.End ();
+
 
 			base.Draw (gameTime);
 		}

@@ -237,7 +237,8 @@ namespace RompecabezasCCA
 			this.Exit ();
 			switch (i)
 			{
-			case EASY_BUTTON_INDEX:				
+			case EASY_BUTTON_INDEX:		
+				
 				new JuegoFacil ().Start ();
 				break;
 			case MEDIUM_BUTTON_INDEX:

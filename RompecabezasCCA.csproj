@@ -141,5 +141,8 @@
     <AndroidAsset Include="Assets\Content\terminator.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
+    <AndroidAsset Include="Assets\Content\minion.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
   </ItemGroup>
 </Project>

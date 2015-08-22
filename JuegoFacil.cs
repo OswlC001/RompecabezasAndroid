@@ -21,6 +21,7 @@ namespace RompecabezasCCA
 			base.OnCreate (bundle);
 
 			var g = new Rompecabezas(3);
+
 			SetContentView((View) g.Services.GetService(typeof(View)));
 			g.Run();
 		}
